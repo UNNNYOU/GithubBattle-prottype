@@ -4,21 +4,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   Query = GitHubClient::Client.parse <<~GRAPHQL
-    query($userName: String!) {
-      user(login: $userName){
-        contributionsCollection {
+    query ($name: String!, $from: DateTime!, $to: DateTime!) {
+      user(login: $name) {
+        contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
-            totalContributions
             weeks {
               contributionDays {
                 contributionCount
-                date
-              }
             }
           }
         }
       }
     }
+  }
   GRAPHQL
 
   # GET /resource/sign_up
@@ -79,13 +77,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update_status
-    countcontributions = 0
-    response = GitHubClient::Client.query(Query, variables: { userName: current_user.github_name })
-    contribution_week_data = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
-                                                        'weeks')
-    all_contibution = contribution_week_data.last(2)[0]['contributionDays'].each do |contribution|
-      countcontributions += contribution['contributionCount']
+    week_contributions = 0
+    response = GitHubClient::Client.query(Query,
+                                          variables: {  name: current_user.github_name,
+                                                        to: Date.yesterday.beginning_of_day.iso8601,
+                                                        from: Date.today.ago(7.days).beginning_of_day.iso8601 })
+    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar', 'weeks')
+    contribution_week.each do |contributions|
+      contributions['contributionDays'].each do |day|
+          week_contributions += day['contributionCount']
+      end
     end
-    current_user.update(contributions: countcontributions)
+    current_user.update(contributions: week_contributions)
   end
 end
