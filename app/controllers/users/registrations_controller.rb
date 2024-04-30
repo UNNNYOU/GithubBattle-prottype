@@ -3,6 +3,23 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  Query = GitHubClient::Client.parse <<~GRAPHQL
+    query($userName: String!) {
+      user(login: $userName){
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                contributionCount
+                date
+              }
+            }
+          }
+        }
+      }
+    }
+  GRAPHQL
 
   # GET /resource/sign_up
   # def new
@@ -63,7 +80,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update_status
     countcontributions = 0
-    response = GitHubClient::Client.query(UsersController::Query, variables: { userName: current_user.github_name })
+    response = GitHubClient::Client.query(Query, variables: { userName: current_user.github_name })
     contribution_week_data = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
                                                         'weeks')
     all_contibution = contribution_week_data.last(2)[0]['contributionDays'].each do |contribution|

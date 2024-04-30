@@ -80,3 +80,6 @@ gem 'graphql-client'
 
 # envファイルにて環境変数を管理するためのgem
 gem 'dotenv-rails'
+
+# cronを使用するためのgem
+gem 'whenever', require: false
