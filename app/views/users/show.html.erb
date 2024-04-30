@@ -1,4 +1,11 @@
 <div>
+  <% if current_user.contributions > @user.contributions%>
+    <h1>勝ち</h1>
+  <% elsif current_user.contributions = @user.contributions %>
+    <h1>引き分け</h1>
+  <% else %>
+    <h1>負け</h1>
+  <%end%>
   <%= current_user.name%>
   <%= current_user.contributions%>
   <%= @user.name%>
