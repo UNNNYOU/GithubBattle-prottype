@@ -1,0 +1,24 @@
+<div class="header">
+  <div class="container m-auto">
+    <div class="flex justify-between">
+    <%= link_to "Github Battle", root_path%>
+    <% if user_signed_in?%>
+      <ul>
+        <li>
+          <%= link_to 'ユーザー一覧', users_path%>
+        </li>
+        <li>
+          <%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete} %>
+        </li>
+      </ul>
+
+    <% else %>
+      <ul>
+        <li>
+          <%= link_to 'ログイン', new_user_session_path %>
+        </li>
+      </ul>
+    <% end %>
+    </div>
+  </div>
+</div>

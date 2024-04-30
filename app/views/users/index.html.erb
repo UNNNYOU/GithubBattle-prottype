@@ -1,0 +1,7 @@
+<div class="container">
+  <div>
+    <% @users.each do |user| %>
+      <%= link_to user.name, user_path(user) %>
+    <% end %>
+  </div>
+</div>
