@@ -1,54 +1,32 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="mx-auto flex min-h-screen w-full items-center justify-center text-gray-600">
+  <div class="flex w-[30rem] flex-col space-y-10">
+    <h2 class="text-center text-4xl font-medium">マイページ</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        <div class="w-full mt-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-green-500">
+          <%= f.text_field :name, autofocus: true, autocomplete: "name" ,placeholder: "名前", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"%>
+        </div>
+
+        <div class="w-full mt-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-green-500">
+          <%= f.text_field :github_name, autofocus: true, autocomplete: "github_name", placeholder: "GitHub ID", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
+        </div>
+
+
+        <div class="w-full mt-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-green-500">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div>
+          <%= f.submit "更新する", class: "text-white w-full mt-8 transform rounded-sm bg-green-600 py-2 font-bold duration-300 hover:bg-green-400" %>
+        </div>
+        <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "削除してよろしいですか？", turbo_confirm: "削除してよろしいですか？" }, method: :delete, class: "text-white w-full mt-8 transform rounded-sm bg-red-400 py-2 font-bold duration-300 hover:bg-red-600" %>
+      <% end %>
+    <%= link_to "戻る", :back, class: "text-center font-medium text-green-500 underline-offset-4 hover:underline" %>
   </div>
-
-  <div>
-    <%= f.label :github_name %>
-    <%= f.text_field :github_name, autofocus: true, autocomplete: "github_name" %>
-  </div>
-
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

@@ -7,6 +7,9 @@
     <% if user_signed_in?%>
       <ul>
         <li>
+          <%= link_to 'マイページ', edit_user_registration_path, class: "mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400" %>
+        </li>
+        <li>
           <%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete} , class: "mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400" %>
         </li>
       </ul>

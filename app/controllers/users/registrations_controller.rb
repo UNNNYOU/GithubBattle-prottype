@@ -53,7 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
@@ -63,7 +63,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  #  end
+
+  # パスワードなしで更新
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 
   # The path used after sign up.
   def after_sign_up_path_for(_resource)
@@ -79,14 +84,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update_status
     week_contributions = 0
     response = GitHubClient::Client.query(Query,
-                                          variables: { name: current_user.github_name,
-                                                       to: Date.yesterday.beginning_of_day.iso8601,
-                                                       from: Date.today.ago(7.days).beginning_of_day.iso8601 })
-    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
-                                                   'weeks')
+      variables: {name: current_user.github_name,
+                  to: Date.yesterday.beginning_of_day.iso8601,
+                  from: Date.today.ago(7.days).beginning_of_day.iso8601})
+    contribution_week = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
+      "weeks")
     contribution_week.each do |contributions|
-      contributions['contributionDays'].each do |day|
-        week_contributions += day['contributionCount']
+      contributions["contributionDays"].each do |day|
+        week_contributions += day["contributionCount"]
       end
     end
     current_user.update(contributions: week_contributions)
