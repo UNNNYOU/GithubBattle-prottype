@@ -25,7 +25,7 @@ services:
     plan: starter
     region: singapore
     buildCommand: ./bin/render-build.sh
-    startCommand: rake update_status_task:update_status
+    startCommand: bundle exec rails runner "puts 'Hello'"
     schedule: 0 6 * * *
     envVars:
       - key: DATABASE_URL

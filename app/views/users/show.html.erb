@@ -5,7 +5,7 @@
   <div class="text-center text-4xl xl:text-8xl mt-4">
     <% if current_user.contributions > @user.contributions%>
       <h1>勝ち</h1>
-    <% elsif current_user.contributions = @user.contributions %>
+    <% elsif current_user.contributions == @user.contributions %>
       <h1>引き分け</h1>
     <% else %>
       <h1>負け</h1>
@@ -20,7 +20,7 @@
         <%= current_user.name %>
       </p>
       <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-        <%= current_user.contributions == 0 ? "戦闘力#{current_user.contributions}": "戦闘力#{current_user.contributions}万"%>
+        <%= current_user.contributions == 0 ? "戦闘力#{current_user.contributions}" : "戦闘力#{current_user.contributions}万"%>
       </p>
     </div>
     <div class="relative flex mr-4 mt-4 w-60 md:w-80 2xl:w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -31,7 +31,7 @@
         <%= @user.name%>
       </p>
       <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-        <%= @user.contributions == 0 ? "戦闘力#{@user.contributions}": "戦闘力#{@user.contributions}万" %>
+        <%= @user.contributions == 0 ? "戦闘力#{@user.contributions}" : "戦闘力#{@user.contributions}万" %>
       </p>
     </div>
     <div class="w-full">
