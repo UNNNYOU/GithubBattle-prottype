@@ -1,27 +1,25 @@
-<div class="container m-auto">
-  <div class="text-center text-gray-700 text-4xl m-10">
-    <p>GITHUB BATTLE MEMBERS</p>
-  </div>
-  <div class="flex flex-wrap justify-center min-h-0">
-    <% @users.each do |user| %>
-      <% if current_user != user %>
-        <div class="relative flex mx-4 mt-4 w-72 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-2xl">
-          <div class="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl">
-            <%= image_tag  "UserImage.png", class: "items-center" %>
-          </div>
-          <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-            <%= user.name %>
-          </p>
-          <%= link_to user_path(user), class: "relative text-center px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group" do%>
-            <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
-            <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
-            <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-            <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-            <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
-            <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">BATTLE START</span>
-          <% end %>
+<div class="text-center text-gray-700 text-4xl m-10">
+  <p>GITHUB BATTLE MEMBERS</p>
+</div>
+<div class="flex flex-wrap justify-center min-h-0">
+  <% @users.each do |user| %>
+    <% if current_user != user %>
+      <div class="relative flex mx-4 mt-4 w-72 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-2xl">
+        <div class="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl">
+          <%= image_tag  "UserImage.png", class: "items-center" %>
         </div>
-      <% end %>
+        <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+          <%= user.name %>
+        </p>
+        <%= link_to user_path(user), class: "relative text-center px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group" do%>
+          <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+          <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+          <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+          <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+          <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+          <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">BATTLE START</span>
+        <% end %>
+      </div>
     <% end %>
-  </div>
+  <% end %>
 </div>

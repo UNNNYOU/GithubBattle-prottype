@@ -13,7 +13,9 @@
   <body>
     <div class="bg-white bg-cover">
       <%= render "shared/header" %>
-      <%= yield %>
+      <div class="container m-auto min-h-screen">
+        <%= yield %>
+      </div>
       <%= render "shared/footer"%>
     </div>
   </body>
