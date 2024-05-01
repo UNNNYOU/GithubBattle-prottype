@@ -1,18 +1,20 @@
-<div class="header bg-black">
+<div class="header bg-black bg-opacity-80">
   <div class="container m-auto">
-    <div class="flex justify-between items-center h-12 bg-black">
-    <%= link_to "Github Battle", root_path%>
+    <div class="flex justify-between items-center h-20">
+      <%= link_to root_path ,class: "ml-6" do%>
+        <%= image_tag "logo.png", class: "h-20 w-auto"%>
+      <% end%>
     <% if user_signed_in?%>
-      <ul class="flex flex-row">
+      <ul>
         <li>
-          <%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete} %>
+          <%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete} , class: "mr-6 text-white text-2xl font-bold hover:underline hover:text-indigo-400" %>
         </li>
       </ul>
 
     <% else %>
       <ul>
         <li>
-          <%= link_to 'ログイン', new_user_session_path %>
+          <%= link_to 'ログイン', new_user_session_path, class: "mr-6 text-white text-2xl font-bold hover:underline hover:text-green-400" %>
         </li>
       </ul>
     <% end %>

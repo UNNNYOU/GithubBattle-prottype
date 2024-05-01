@@ -4,19 +4,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   Query = GitHubClient::Client.parse <<~GRAPHQL
-    query ($name: String!, $from: DateTime!, $to: DateTime!) {
-      user(login: $name) {
-        contributionsCollection(from: $from, to: $to) {
-          contributionCalendar {
-            weeks {
-              contributionDays {
-                contributionCount
+      query ($name: String!, $from: DateTime!, $to: DateTime!) {
+        user(login: $name) {
+          contributionsCollection(from: $from, to: $to) {
+            contributionCalendar {
+              weeks {
+                contributionDays {
+                  contributionCount
+              }
             }
           }
         }
       }
     }
-  }
   GRAPHQL
 
   # GET /resource/sign_up
@@ -79,13 +79,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update_status
     week_contributions = 0
     response = GitHubClient::Client.query(Query,
-                                          variables: {  name: current_user.github_name,
-                                                        to: Date.yesterday.beginning_of_day.iso8601,
-                                                        from: Date.today.ago(7.days).beginning_of_day.iso8601 })
-    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar', 'weeks')
+                                          variables: { name: current_user.github_name,
+                                                       to: Date.yesterday.beginning_of_day.iso8601,
+                                                       from: Date.today.ago(7.days).beginning_of_day.iso8601 })
+    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
+                                                   'weeks')
     contribution_week.each do |contributions|
       contributions['contributionDays'].each do |day|
-          week_contributions += day['contributionCount']
+        week_contributions += day['contributionCount']
       end
     end
     current_user.update(contributions: week_contributions)
