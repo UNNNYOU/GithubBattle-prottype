@@ -19,5 +19,6 @@
           <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">戦いに行く</span>
         <%end%>
     </div>
+    <%= Time.current.ago(7.days).beginning_of_day.to_time.iso8601 %>
   </div>
 </div>

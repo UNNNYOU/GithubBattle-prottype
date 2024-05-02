@@ -84,14 +84,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update_status
     week_contributions = 0
     response = GitHubClient::Client.query(Query,
-      variables: {name: current_user.github_name,
-                  to: Date.yesterday.beginning_of_day.iso8601,
-                  from: Date.yesterday.ago(7.days).beginning_of_day.iso8601})
-    contribution_week = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
-      "weeks")
+                                          variables: { name: user.github_name,
+                                                       to: Time.current.yesterday.end_of_day.iso8601,
+                                                       from: Time.current.ago(7.days).beginning_of_day.iso8601 })
+    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
+                                                   'weeks')
     contribution_week.each do |contributions|
-      contributions["contributionDays"].each do |day|
-        week_contributions += day["contributionCount"]
+      contributions['contributionDays'].each do |day|
+        week_contributions += day['contributionCount']
       end
     end
     current_user.update(contributions: week_contributions)
