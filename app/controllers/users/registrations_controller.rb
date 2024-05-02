@@ -76,6 +76,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     users_path
   end
 
+  def after_update_path_for(_resource)
+    update_status
+    root_path
+  end
+
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(_resource)
     users_path
@@ -84,7 +89,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update_status
     week_contributions = 0
     response = GitHubClient::Client.query(Query,
-                                          variables: { name: user.github_name,
+                                          variables: { name: current_user.github_name,
                                                        to: Time.current.yesterday.end_of_day.iso8601,
                                                        from: Time.current.ago(7.days).beginning_of_day.iso8601 })
     contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',

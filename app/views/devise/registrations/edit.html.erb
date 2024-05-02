@@ -25,7 +25,7 @@
         <div>
           <%= f.submit "更新する", class: "text-white w-full mt-8 transform rounded-sm bg-green-600 py-2 font-bold duration-300 hover:bg-green-400" %>
         </div>
-        <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "削除してよろしいですか？", turbo_confirm: "削除してよろしいですか？" }, method: :delete, class: "text-white w-full mt-8 transform rounded-sm bg-red-400 py-2 font-bold duration-300 hover:bg-red-600" %>
+        <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "削除してよろしいですか？", turbo_confirm: "削除してよろしいですか？", turbo_method: :delete }, class: "text-white w-full mt-8 transform rounded-sm bg-red-400 py-2 font-bold duration-300 hover:bg-red-600" %>
       <% end %>
     <%= link_to "戻る", :back, class: "text-center font-medium text-green-500 underline-offset-4 hover:underline" %>
   </div>
