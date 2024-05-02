@@ -9,12 +9,14 @@ namespace :update_status_task do
                                                          from: Time.current.ago(7.days).beginning_of_day.iso8601 })
       contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
                                                      'weeks')
-      contribution_week.each do |contributions|
-        contributions['contributionDays'].each do |day|
-          week_contributions += day['contributionCount']
+      if contribution_week.presence
+        contribution_week.each do |contributions|
+          contributions['contributionDays'].each do |day|
+            week_contributions += day['contributionCount']
+          end
         end
+        user.update!(contributions: week_contributions)
       end
-      user.update(contributions: week_contributions)
     end
   end
 end
