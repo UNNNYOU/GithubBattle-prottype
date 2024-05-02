@@ -86,7 +86,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     response = GitHubClient::Client.query(Query,
       variables: {name: current_user.github_name,
                   to: Date.yesterday.beginning_of_day.iso8601,
-                  from: Date.today.ago(7.days).beginning_of_day.iso8601})
+                  from: Date.yesterday.ago(7.days).beginning_of_day.iso8601})
     contribution_week = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
       "weeks")
     contribution_week.each do |contributions|
