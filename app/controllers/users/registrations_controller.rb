@@ -8,6 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         user(login: $name) {
           contributionsCollection(from: $from, to: $to) {
             contributionCalendar {
+              totalContributions
               weeks {
                 contributionDays {
                   contributionCount
@@ -72,12 +73,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(_resource)
-    update_status
+    set_contributions
     users_path
   end
 
   def after_update_path_for(_resource)
-    update_status
+    set_contributions
     root_path
   end
 
@@ -86,22 +87,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
     users_path
   end
 
-  def update_status
+  def set_contributions
     week_contributions = 0
     response = GitHubClient::Client.query(Query,
-                                          variables: { name: current_user.github_name,
-                                                       to: Time.current.yesterday.end_of_day.iso8601,
-                                                       from: Time.current.ago(7.days).beginning_of_day.iso8601 })
-    contribution_week = response.original_hash.dig('data', 'user', 'contributionsCollection', 'contributionCalendar',
-                                                   'weeks')
+      variables: {name: current_user.github_name,
+                  to: Time.current.yesterday.end_of_day.iso8601,
+                  from: Time.current.ago(7.days).beginning_of_day.iso8601})
+    contribution_week = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
+      "weeks")
 
-    if contribution_week.presence
-      contribution_week.each do |contributions|
-        contributions['contributionDays'].each do |day|
-          week_contributions += day['contributionCount']
-        end
+    return unless contribution_week.presence
+
+    contribution_week.each do |contributions|
+      contributions["contributionDays"].each do |day|
+        week_contributions += day["contributionCount"]
       end
-      current_user.update(contributions: week_contributions)
     end
+    current_user.update(contributions: week_contributions)
   end
 end
