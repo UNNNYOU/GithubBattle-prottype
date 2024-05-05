@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: 1
+  experience_point: 1
+  week_contributions: 1
+  temporary_contribution_data: 1
+  user: one
+
+two:
+  level: 1
+  experience_point: 1
+  week_contributions: 1
+  temporary_contribution_data: 1
+  user: two
