@@ -5,14 +5,13 @@
         <div class="flex justify-center items-center">
           <%= image_tag "logo.png", class: "h-auto w-1/2 mt-20"%>
         </div>
-        <div>
-          <p class="text-3xl xl:text-6xl font-bold">GITHUB BATTLEとは</p>
-          <p class="mt-2 font-bold">GITHUB BATTLEは、</p>
-          <p class="mt-2 font-bold">GitHubの草の数を競い合うゲームです。</p>
-          <p class="mt-2 font-bold">前日から７日間の草を集計しています</p>
+        <div class="text-md xl:text-xl font-bold">
+          <p class="text-2xl xl:text-5xl">GITHUB BATTLEとは</p>
+          <p class="mt-2">GitHubの草の数を競い合うゲームです</p>
+          <p class="mt-2">前日から７日間の草を集計しています</p>
         </div>
         <div class="mt-16">
-          <%= link_to users_path, class: "relative text-center px-20 py-3 overflow-hidden font-medium text-gray-600 bg-green-300 border border-gray-100 rounded-lg shadow-inner group" do%>
+          <%= link_to users_path, class: "relative text-center px-20 py-3 overflow-hidden font-bold text-gray-600 bg-green-300 border border-gray-100 rounded-sm shadow-inner group" do%>
               <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
               <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
               <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
