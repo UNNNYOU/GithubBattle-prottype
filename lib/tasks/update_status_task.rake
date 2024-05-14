@@ -12,7 +12,7 @@ namespace :update_status_task do
                     to: Time.current.yesterday.end_of_day.iso8601,
                     from: Time.current.ago(30.days).beginning_of_day.iso8601})
 
-      # 　一番新しい日にちのコントリビューション数
+      # 一番新しい日にちのコントリビューション数
       latest_date_contributions = response.original_hash.dig("data", "user", "contributionsCollection",
         "contributionCalendar", "weeks", -1, "contributionDays", -1, "contributionCount")
 
@@ -20,7 +20,7 @@ namespace :update_status_task do
       oldest_date_contributions = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
         "weeks", 0, "contributionDays", 0, "contributionCount")
 
-      # 　約１ヶ月分全てのコントリビューション数
+      # 約１ヶ月分全てのコントリビューション数
       all_contributions = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
         "totalContributions")
 
@@ -84,7 +84,7 @@ namespace :update_status_task do
       oldest_date_contributions = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
         "weeks", 0, "contributionDays", 0, "contributionCount")
 
-      # 　約１ヶ月分全てのコントリビューション数
+      # 約１ヶ月分全てのコントリビューション数
       all_contributions = response.original_hash.dig("data", "user", "contributionsCollection", "contributionCalendar",
         "totalContributions")
 
