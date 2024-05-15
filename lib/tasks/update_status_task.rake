@@ -97,15 +97,15 @@ namespace :update_status_task do
       temporal_contributions = all_contributions - oldest_date_contributions
 
       # ユーザーデータからlevelを取得
-      level = user.profile.level
+      level_data = user.profile.level
 
       # 経験値が10以上の場合、レベルアップする
       if experience_point_data > 10
         while experience_point_data >= 10
           experience_point_data -= 10
-          level += 1
+          level_data += 1
         end
-        user.profile.update!(level:, temporal_contribution_data: temporal_contributions,
+        user.profile.update!(level: level_data, temporal_contribution_data: temporal_contributions,
           experience_points: experience_point_data)
       else
         user.profile.update!(temporal_contribution_data: temporal_contributions,
