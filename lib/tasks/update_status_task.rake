@@ -92,6 +92,7 @@ namespace :update_status_task do
 
       # 経験値の計算
       experience_point_data = all_contributions - user.profile.temporal_contribution_data
+      experience_point_data += user.profile.experience_points
 
       # 次回の経験値の計算の際、前日のコントリビューション数を保存するためのデータ
       temporal_contributions = all_contributions - oldest_date_contributions
@@ -100,15 +101,10 @@ namespace :update_status_task do
       level_data = user.profile.level
 
       # 経験値が10以上の場合、レベルアップする
-      if experience_point_data >= 10
-        experience_point_data_temp = experience_point_data % 10
-        level_data += (experience_point_data / 10).ceil
-        user.profile.update!(level: level_data, temporal_contribution_data: temporal_contributions,
-          experience_points: experience_point_data_temp)
-      else
-        user.profile.update!(temporal_contribution_data: temporal_contributions,
-          experience_points: experience_point_data)
-      end
+      experience_point_data_temp = experience_point_data % 10
+      level_data += (experience_point_data / 10).ceil
+      user.profile.update!(level: level_data, temporal_contribution_data: temporal_contributions,
+        experience_points: experience_point_data_temp)
     end
   end
 end
