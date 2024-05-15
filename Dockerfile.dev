@@ -15,4 +15,4 @@ WORKDIR /myapp
 RUN gem install bundler
 COPY . /myapp
 COPY update_task.sh /myapp/update_task.sh
-RUN chmod +x /myapp/update_task.sh
+RUN chmod a+x /myapp/update_task.sh
