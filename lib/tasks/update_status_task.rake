@@ -100,7 +100,7 @@ namespace :update_status_task do
       level_data = user.profile.level
 
       # 経験値が10以上の場合、レベルアップする
-      if experience_point_data > 10
+      if experience_point_data >= 10
         while experience_point_data >= 10
           experience_point_data -= 10
           level_data += 1

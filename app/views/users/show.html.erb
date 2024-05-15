@@ -18,7 +18,7 @@
           <%= image_tag  "UserImage.png", class: "items-center" %>
         </div>
         <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-          <%= current_user.name %>
+          <%= current_user.name %> 
         </p>
         <p class="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
           <%= current_user.profile.week_contributions == 0 ? "戦闘力#{current_user.profile.week_contributions}" : "戦闘力#{current_user.profile.week_contributions}万"%>
