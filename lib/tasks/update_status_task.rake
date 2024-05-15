@@ -101,12 +101,10 @@ namespace :update_status_task do
 
       # 経験値が10以上の場合、レベルアップする
       if experience_point_data >= 10
-        while experience_point_data >= 10
-          experience_point_data -= 10
-          level_data += 1
-        end
+        experience_point_data_temp = experience_point_data % 10
+        level_data += (experience_point_data / 10).ceil
         user.profile.update!(level: level_data, temporal_contribution_data: temporal_contributions,
-          experience_points: experience_point_data)
+          experience_points: experience_point_data_temp)
       else
         user.profile.update!(temporal_contribution_data: temporal_contributions,
           experience_points: experience_point_data)
