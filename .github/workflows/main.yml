@@ -3,16 +3,18 @@ on:
     types: [created]
   discussion_comment:
     types: [created]
+
 jobs:
   discussion_created:
     runs-on: ubuntu-latest
-    if: github.event.discussion && !github.event.comment
+    if: ${{ github.event.discussion && !github.event.comment }}
     steps:
       - run: |
-          curl -X POST -d '{ "text": "Created discussion: ${{ github.event.discussion.html_url }}" }' ${{ secrets.DISCORD_WEBHOOK }}
+          curl -X POST -H "Content-Type: application/json" -d '{"content": "Created discussion: ${{ github.event.discussion.html_url }}"}' ${{ secrets.DISCORD_WEBHOOK }}
+
   discussion_commented:
     runs-on: ubuntu-latest
-    if: github.event.discussion && github.event.comment
+    if: ${{ github.event.discussion && github.event.comment }}
     steps:
       - run: |
-          curl -X POST -d '{ "text": "Created discussion comment: ${{ github.event.comment.html_url }}" }' ${{ secrets.DISCORD_WEBHOOK }}
+          curl -X POST -H "Content-Type: application/json" -d '{"content": "Created discussion comment: ${{ github.event.comment.html_url }}"}' ${{ secrets.DISCORD_WEBHOOK }}
