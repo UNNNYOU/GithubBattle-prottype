@@ -8,8 +8,8 @@ jobs:
   discussion_created:
     runs-on: ubuntu-latest
     steps:
-      - uses sarisia/actions-status-discord@v1
-        if: github.event.discussion && !github.event.comment
+      - uses: sarisia/actions-status-discord@v1
+        if: github.event_name == 'discussion'
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
 
@@ -17,6 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: sarisia/actions-status-discord@v1
-        if: github.event.discussion && !github.event.comment
+        if: github.event_name == 'discussion_comment'
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
