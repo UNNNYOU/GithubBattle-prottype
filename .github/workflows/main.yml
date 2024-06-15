@@ -1,0 +1,22 @@
+on:
+  discussion:
+    types: [created]
+  discussion_comment:
+    types: [created]
+
+jobs:
+  discussion_created:
+    runs-on: ubuntu-latest
+    steps:
+      - uses sarisia/actions-status-discord@v1
+        if: github.event.discussion && !github.event.comment
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+
+  discussion_commented:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: github.event.discussion && !github.event.comment
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
